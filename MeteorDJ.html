@@ -4,4 +4,16 @@
 
 <body>
   {{> loginButtons}}
+
+  <hr>
+
+  <ul>
+    {{#each playlist}}
+      {{> song}}
+    {{/each}}
+  </ul>
 </body>
+
+<template name="song">
+  <li>{{title}}</li>
+</template>
