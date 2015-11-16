@@ -11,6 +11,26 @@ if (Meteor.isClient) {
       return Playlist.find();
     }
   });
+
+  Template.body.events({
+    "submit .new-song": function(event) {
+      var title = event.target.title.value;
+
+      Playlist.insert({
+        title: title,
+        createdAt: new Date()
+      });
+
+      event.target.title.value = "";
+      return false;
+    }
+  });
+
+  Template.song.events({
+    "click .delete": function() {
+      Playlist.remove(this._id);
+    }
+  });
 }
 
 if (Meteor.isServer) {

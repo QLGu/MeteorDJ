@@ -3,17 +3,31 @@
 </head>
 
 <body>
-  {{> loginButtons}}
+  <div class="header">
+    {{> loginButtons}}
+    <hr>
+  </div>
 
-  <hr>
+  <div class="playlist-container">
+    <h1>Playlist</h1>
 
-  <ul>
-    {{#each playlist}}
-      {{> song}}
-    {{/each}}
-  </ul>
+    <form class="new-song">
+      <input type="text" name="title" placeholder="Song title" autocomplete="off" autofocus>
+      <input type="submit" value="Submit">
+    </form>
+
+    <ul>
+      {{#each playlist}}
+        {{> song}}
+      {{/each}}
+    </ul>
+  </div>
 </body>
 
 <template name="song">
-  <li>{{title}}</li>
+  <li>
+    {{title}}
+    <i>({{createdAt}})</i>
+    <button class="delete">Remove</button>
+  </li>
 </template>
