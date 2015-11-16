@@ -1,1 +1,12 @@
-/* CSS declarations go here */
+
+.header {
+  text-align: right;
+}
+
+.main {
+  text-align: center;
+}
+
+.footer {
+  text-align: left;
+}

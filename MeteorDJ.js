@@ -1,5 +1,5 @@
+// userdata = new Mongo.Collection("userdata");
 Playlist = new Mongo.Collection("playlist");
-//TODO replace with user-specefic playlists
 
 if (Meteor.isClient) {
   Accounts.ui.config({
