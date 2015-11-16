@@ -5,28 +5,34 @@
 <body>
   <div class="header">
     {{> loginButtons align="right"}}
+    <!-- <div class="center">MeteorDJ (+subtitle: room) </div>
+    <div class="left">[settings gear] or [root menu]</div> -->
     <hr>
   </div>
 
   <div class="main">
-    {{#if currentUser}}
-      <div class="playlist-container">
-        <h1>Playlist</h1>
 
-        <form class="new-song">
-          <input type="text" name="title" placeholder="Song title" autocomplete="off" autofocus>
+    <div class="playlist-container">
+      <!-- TODO move these components into templates -->
+
+      {{#if currentUser}}
+      <strong>Add Playlist</strong>
+        <form class="add-song">
+          <input type="text" name="url" placeholder="song link" autocomplete="off" autofocus>
           <input type="submit" value="Submit">
         </form>
+      {{else}}
+        <span>Sign in to add songs.</span>
+      {{/if}}
 
-        <ul>
-          {{#each playlist}}
-            {{> song}}
-          {{/each}}
-        </ul>
-      </div>
-    {{else}}
-      <span>sign in to make playlists</span>
-    {{/if}}
+      <ul>
+        {{#each songs}}
+          {{> song}}
+        {{/each}}
+      </ul>
+
+    </div>
+
   </div>
 
   <div class="footer">
@@ -37,7 +43,7 @@
 
 <template name="song">
   <li>
-    {{title}}
+    {{code}}
     <i>({{createdAt}})</i>
     <button class="delete">Remove</button>
   </li>

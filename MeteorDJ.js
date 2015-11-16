@@ -1,34 +1,33 @@
-// userdata = new Mongo.Collection("userdata");
-Playlist = new Mongo.Collection("playlist");
+Songs = new Mongo.Collection("songs");
 
 if (Meteor.isClient) {
+  Meteor.subscribe("songs");
+
   Accounts.ui.config({
-    passwordSignupFields: "USERNAME_AND_OPTIONAL_EMAIL"
+    passwordSignupFields: "USERNAME_AND_EMAIL"
   });
 
   Template.body.helpers({
-    playlist: function() {
-      return Playlist.find();
+    songs: function() {
+      return Songs.find();
     }
   });
 
   Template.body.events({
-    "submit .new-song": function(event) {
-      var title = event.target.title.value;
+    "submit .add-song": function(event) {
+      var url = event.target.url.value;
+      event.target.url.value = "";
 
-      Playlist.insert({
-        title: title,
-        createdAt: new Date()
-      });
+      Meteor.call("addSong", url);
 
-      event.target.title.value = "";
       return false;
     }
   });
 
   Template.song.events({
     "click .delete": function() {
-      Playlist.remove(this._id);
+      // delete song from user (not from database)
+      // move to methods
     }
   });
 }
@@ -37,4 +36,32 @@ if (Meteor.isServer) {
   Meteor.startup(function () {
     // code to run on server at startup
   });
+
+  Meteor.publish("songs", function() {
+    return Songs.find();
+  });
 }
+
+Meteor.methods({
+  addSong: function(url) {
+    var code = url;
+    //TODO extract and validate youtube/soundcloud id = code
+
+    var platform = "self"
+    //TODO platform = youtube || soundcloud (based on url)
+
+    Songs.insert({
+      createdAt: new Date(),
+      code: code,
+      platform: platform
+    });
+  }
+});
+
+//TODO make universal song list with adding
+//TODO extract youtube/soundcloud id code from input url
+//TODO filter song list permissions per users who have added it (remove autopublish)
+//TODO implement tagging per user
+//TODO implement song player
+//TODO implement saving current song from other users
+//TODO route /room and /@user pages with FlowRouter
