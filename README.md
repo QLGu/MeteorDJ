@@ -1,2 +1,2 @@
 # MeteorDJ
-Listen to music with people in real-time.
+Experience music with people in real-time.
