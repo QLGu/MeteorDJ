@@ -49,20 +49,25 @@ Meteor.methods({
     }
 
     //TODO extract and validate youtube/soundcloud id = code
-    var code = url;
 
-    //TODO platform = youtube || soundcloud (based on url)
-    var platform = "self"
+    //TODO (later) change this to highlight box (and add on press enter) if correct
+    //TODO else filter song view if not a code
+    var extracted = Util.extractUrlCode(url);
+    if (!extracted) {
+      //TODO temp, move reaction into ui later
+      console.log("not a valid url");
+      return false;
+    }
 
-    //TODO get song title from platform service
+    //TODO get song title from platform service (using api?)
     // var title =
 
-    var song = Songs.findOne({code: code, platform: platform}, {_id: 1});
+    var song = Songs.findOne(extracted, {_id: 1});
     if (!song) {
       var songId = Songs.insert({
         createdAt: new Date(),
-        platform: platform,
-        code: code,
+        code: extracted.code,
+        platform: extracted.platform,
         saved: []
       });
     } else {
@@ -70,6 +75,7 @@ Meteor.methods({
     }
 
     Meteor.call("saveSong", songId);
+    return true;
   },
   saveSong: function(songId) {
     // if song is not saved to user
@@ -83,11 +89,10 @@ Meteor.methods({
   }
 });
 
-//TODO make universal song list with adding
-//TODO extract youtube/soundcloud id code from input url
+//TODO add installation-specific api keys using Meteor.settings
 //TODO filter song list permissions per users who have added it to their "song library"
 //TODO implement tagging per user
 //TODO implement song player (with hidden controls)
-//TODO implement saving current song from other users
+//TODO implement saving current song from player
 //TODO route /room and /@user pages with FlowRouter
 //TODO admin panel
