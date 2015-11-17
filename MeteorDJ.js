@@ -45,8 +45,7 @@ if (Meteor.isServer) {
 Meteor.methods({
   addSong: function(url) {
     if (!Meteor.userId()) {
-      // throw error in future
-      console.log("not logged in");
+      throw new Meteor.Error("not-signed-in");
     }
 
     //TODO extract and validate youtube/soundcloud id = code
@@ -69,7 +68,6 @@ Meteor.methods({
     } else {
       var songId = song._id;
     }
-    console.log(songId);
 
     Meteor.call("saveSong", songId);
   },
@@ -77,6 +75,11 @@ Meteor.methods({
     // if song is not saved to user
     //add user to song.saved[]
     Songs.update(songId, {$addToSet: {saved: Meteor.userId()}});
+  },
+  getSongs: function() {
+    //get all user's songs
+    //TODO how to filter? in separate code?
+    // is storing tags inside users inside songs too ineffecient?
   }
 });
 
@@ -87,3 +90,4 @@ Meteor.methods({
 //TODO implement song player (with hidden controls)
 //TODO implement saving current song from other users
 //TODO route /room and /@user pages with FlowRouter
+//TODO admin panel
