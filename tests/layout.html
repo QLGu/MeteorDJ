@@ -1,12 +1,48 @@
+<!-- abstract layout -->
 
 <desktop-view>
-  <!-- easy -->
+  <nav-bar>
+    <site-location left></site-location>
+    <song-info center></song-info>
+    <user-indicator right></user-indicator>
+    <user-login right></user-login>
+  </nav-bar>
+  <!-- content -->
 </desktop-view>
 
 <phone-view>
-  <!-- easy -->
+  <nav-bar>
+    <site-location left></site-location>
+    <user-indicator center></user-indicator>
+    <user-login right></user-login>
+  </nav-bar>
+  <song-info center></song-info>
+  <!-- content -->
 </phone-view>
 
 <tablet-view>
-  <!-- hard -->
+  <!-- more complex, more variable, many options -->
 </tablet-view>
+
+<!-- abstract elements -->
+
+<element site-location>
+  <b><community-main-link></community-main-link></b>
+  <room-selector-dropdown></room-selector-dropdown>
+</element>
+
+<element song-info>
+  <b>{{title}}</b>
+  <i>DJ: {{currentdj}}</i>
+  <duration-bar></duration-bar>
+</element>
+
+<element user-indicator>
+  <user-picture></user-picture>
+  <!-- opens dialog: -->
+  <user-settings></user-settings>
+</element>
+
+<element user-login>
+  {{> loginButtons align="right"}}
+</element>
