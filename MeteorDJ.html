@@ -3,11 +3,22 @@
 </head>
 
 <body>
-  <div class="header">
-    {{> loginButtons align="right"}}
-    <!-- <div class="center">MeteorDJ (+subtitle: room) </div>
-    <div class="left">[settings gear] or [root menu]</div> -->
-    <hr>
+
+  <div class="frame header">
+    <div class="bit-3 left location">
+      <b>Community</b><br>
+      <span>Room</span>
+    </div>
+
+    <div class="bit-3 center song-info">
+      <b>Song Title</b><br>
+      <i>DJ: SomePerson</i><br>
+      progressbar
+    </div>
+
+    <div class="bit-3 right center-v">
+      {{> loginButtons align="right"}}
+    </div>
   </div>
 
   <div class="main">
